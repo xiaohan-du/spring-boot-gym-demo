@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${gym.name}"></title>
+  <link th:replace="fragments/header :: bootstrap-css"/>
+
+</head>
+<body>
+<div class="container">
+  <div th:replace="fragments/navbar"></div>
+  <h1 class="title" th:text="${gym.name}"></h1>
+  <div>
+    <table class="summary-table">
+      <thead>
+      <tr>
+        <th class="table-header">Name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>ID:</td>
+        <td th:text="${gym.id}">
+          Gym ID
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div th:replace="fragments/footer :: footer-links"></div>
+</div>
+<div th:replace="fragments/footer :: bootstrap-js"></div>
+</body>
+</html>

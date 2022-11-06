@@ -5,6 +5,7 @@ import gymDemo.gym.domain.Gym;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GymServiceImpl implements GymService {
@@ -16,5 +17,15 @@ public class GymServiceImpl implements GymService {
     public List<GymDto> getGyms() {
         List<Gym> gyms = gymRepository.getGyms();
         return GymAssembler.toDto(gyms);
+    }
+
+    @Override
+    public Optional<GymDto> getGymById(String id) {
+        Optional<Gym> aGym = gymRepository.getGymById(id);
+        if (aGym.isPresent()) {
+            return Optional.of(GymAssembler.toDto(aGym.get()));
+        } else {
+            return Optional.empty();
+        }
     }
 }

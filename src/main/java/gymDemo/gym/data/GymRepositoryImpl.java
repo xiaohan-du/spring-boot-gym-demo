@@ -1,11 +1,14 @@
 package gymDemo.gym.data;
 
 import gymDemo.gym.domain.Gym;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public class GymRepositoryImpl implements GymRepository{
     private final JdbcTemplate jdbcTemplate;
@@ -30,5 +33,15 @@ public class GymRepositoryImpl implements GymRepository{
     public List<Gym> getGyms() {
         String getGymsSQL = "SELECT * FROM gym";
         return jdbcTemplate.query(getGymsSQL, gymRowMapper);
+    }
+
+    @Override
+    public Optional<Gym> getGymById(String id) {
+        String getGymByCodeSQL = "SELECT * FROM gym WHERE id = ?";
+        try {
+            return Optional.of(jdbcTemplate.queryForObject(getGymByCodeSQL, gymRowMapper, id));
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return Optional.empty();
+        }
     }
 }
