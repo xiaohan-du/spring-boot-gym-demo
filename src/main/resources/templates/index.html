@@ -9,9 +9,13 @@
         crossorigin="anonymous"
         th:fragment="bootstrap-css"
   >
-
+  <link th:replace="fragments/header :: bootstrap-css"></link>
 </head>
 <body>
-<span>Gym demo</span>
+<div class="container">
+  <div th:replace="fragments/navbar"></div>
+  <span>Gym demo</span>
+  <div th:replace="fragments/footer"></div>
+</div>
 </body>
 </html>

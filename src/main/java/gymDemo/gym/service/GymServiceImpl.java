@@ -28,4 +28,16 @@ public class GymServiceImpl implements GymService {
             return Optional.empty();
         }
     }
+
+    @Override
+    public void addNewGym(GymDto gymDto) {
+        Gym newGym = new Gym(
+                gymDto.getName(),
+                gymDto.getId(),
+                gymDto.getLocation(),
+                gymDto.getFee(),
+                false
+        );
+        gymRepository.add(newGym);
+    }
 }

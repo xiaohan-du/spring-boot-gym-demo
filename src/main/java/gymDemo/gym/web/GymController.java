@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("gym")
+@RequestMapping({"gym"})
 public class GymController {
     private final GymService gymService;
     public GymController(GymService svc) {
@@ -25,6 +25,7 @@ public class GymController {
     public void getGyms(Model model) {
         List<GymDto> gyms = gymService.getGyms();
         model.addAttribute("gyms", gyms);
+        System.out.println(gyms);
     }
 
     @GetMapping("gym-list")

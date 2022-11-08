@@ -44,4 +44,10 @@ public class GymRepositoryImpl implements GymRepository{
             return Optional.empty();
         }
     }
+
+    @Override
+    public void add(Gym newGym) {
+        String addGymSQL = "INSERT INTO gym (name, id, location, fee, is_approved) values (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(addGymSQL, newGym.getName(), newGym.getId(), newGym.getLocation(), newGym.getFee(), newGym.getIsApproved() ? '1' : '0');
+    }
 }

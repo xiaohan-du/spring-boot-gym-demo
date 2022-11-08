@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface GymRepository {
     List<Gym> getGyms();
     Optional<Gym> getGymById(String id);
+    void add(Gym newGym);
 }

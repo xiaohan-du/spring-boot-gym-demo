@@ -1,0 +1,54 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>New Gym</title>
+  <link th:replace="fragments/header :: bootstrap-css"></link>
+</head>
+<body>
+
+<div class="container">
+  <div th:replace="fragments/navbar"></div>
+  <h1>Enter gym details</h1>
+
+  <form th:action="@{/admin/gym/add}" th:method="post" th:object="${gymForm}">
+
+    <div class="mb-3">
+      <label class="form-label" for="name">Name:</label>
+      <input class="form-control" th:field="*{name}" type="text"/>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="id">ID:</label>
+      <input class="form-control" th:field="*{id}" type="text"/>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="location">Location:</label>
+      <input class="form-control" th:field="*{location}" type="text"/>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="fee">Fee:</label>
+      <input class="form-control" th:field="*{fee}" type="text"/>
+    </div>
+
+    <div class="mb-3">
+
+      <button class="btn btn-primary">Submit</button>
+    </div>
+
+    <div>
+      <div class="mb-3">
+        <a class="btn btn-primary" href="/gym/gym-list">Cancel</a>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+
+<script th:replace="fragments/footer :: bootstrap-js"></script>
+
+</body>
+</html>
