@@ -4,10 +4,7 @@ import gymDemo.gym.service.GymDto;
 import gymDemo.gym.service.GymService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -21,11 +18,22 @@ public class GymController {
         this.gymService = svc;
     }
 
+    private List<GymDto> getGyms() {
+        return gymService.getGyms();
+    }
+
+    private List<GymDto> getGymsBySearch(String query) {
+        return gymService.getGymsBySearch(query);
+    }
     @ModelAttribute
-    public void getGyms(Model model) {
-        List<GymDto> gyms = gymService.getGyms();
+    public void getGyms(@RequestParam(name = "q", required = false) Optional<String> query, Model model) {
+        List<GymDto> gyms;
+        if (query.isPresent()) {
+            gyms = this.getGymsBySearch(query.get());
+        } else {
+            gyms = this.getGyms();
+        }
         model.addAttribute("gyms", gyms);
-        System.out.println(gyms);
     }
 
     @GetMapping("gym-list")

@@ -40,4 +40,10 @@ public class GymServiceImpl implements GymService {
         );
         gymRepository.add(newGym);
     }
+
+    @Override
+    public List<GymDto> getGymsBySearch(String query) {
+        List<Gym> gyms = gymRepository.getGymBySearch(query);
+        return GymAssembler.toDto(gyms);
+    }
 }

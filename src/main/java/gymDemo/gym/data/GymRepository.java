@@ -9,4 +9,5 @@ public interface GymRepository {
     List<Gym> getGyms();
     Optional<Gym> getGymById(String id);
     void add(Gym newGym);
+    List<Gym> getGymBySearch(String query);
 }

@@ -50,4 +50,12 @@ public class GymRepositoryImpl implements GymRepository{
         String addGymSQL = "INSERT INTO gym (name, id, location, fee, is_approved) values (?, ?, ?, ?, ?)";
         jdbcTemplate.update(addGymSQL, newGym.getName(), newGym.getId(), newGym.getLocation(), newGym.getFee(), newGym.getIsApproved() ? '1' : '0');
     }
+
+    @Override
+    public List<Gym> getGymBySearch(String query) {
+        String searchQuery = "%" + query + "%";
+        String searchSQL = "SELECT * FROM gym WHERE name LIKE ?";
+        System.out.println(searchSQL);
+        return jdbcTemplate.query(searchSQL, gymRowMapper, searchQuery);
+    }
 }

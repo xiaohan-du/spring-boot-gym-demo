@@ -7,4 +7,5 @@ public interface GymService {
     List<GymDto> getGyms();
     Optional<GymDto> getGymById(String id);
     void addNewGym(GymDto gymDto);
+    List<GymDto> getGymsBySearch(String query);
 }
