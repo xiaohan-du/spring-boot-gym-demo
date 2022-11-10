@@ -55,7 +55,6 @@ public class GymRepositoryImpl implements GymRepository{
     public List<Gym> getGymBySearch(String query) {
         String searchQuery = "%" + query + "%";
         String searchSQL = "SELECT * FROM gym WHERE name LIKE ?";
-        System.out.println(searchSQL);
         return jdbcTemplate.query(searchSQL, gymRowMapper, searchQuery);
     }
 }

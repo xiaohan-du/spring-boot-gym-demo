@@ -25,20 +25,15 @@ public class GymController {
     private List<GymDto> getGymsBySearch(String query) {
         return gymService.getGymsBySearch(query);
     }
-    @ModelAttribute
-    public void getGyms(@RequestParam(name = "q", required = false) Optional<String> query, Model model) {
+
+    @GetMapping("gym-list")
+    public ModelAndView getGymsView(@RequestParam(name = "q", required = false) Optional<String> query, Model model) {
         List<GymDto> gyms;
         if (query.isPresent()) {
             gyms = this.getGymsBySearch(query.get());
         } else {
             gyms = this.getGyms();
         }
-        model.addAttribute("gyms", gyms);
-    }
-
-    @GetMapping("gym-list")
-    public ModelAndView getGymsView(Model model) {
-        List<GymDto> gyms = gymService.getGyms();
         model.addAttribute("gyms", gyms);
         var mv = new ModelAndView("gym/gym-list", model.asMap());
         return mv;
