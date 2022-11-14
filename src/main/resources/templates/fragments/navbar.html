@@ -21,13 +21,16 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Choose a gym
+              Choose a Gym
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li th:each="gym : ${gyms}">
                 <a class="dropdown-item" th:text="${gym.name}" th:href="@{/gym/profile/{id} (id=${gym.id})}">Gym name</a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/gym/add">Add a Gym</a>
           </li>
         </ul>
 
