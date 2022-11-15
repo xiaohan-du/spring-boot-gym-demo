@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Data
@@ -14,9 +15,8 @@ import javax.validation.constraints.Pattern;
 public class GymForm {
     @NotEmpty(message = "{name.invalid}")
     private String name;
-    @Pattern(regexp = "\\(|\\)|\\d{3}", message = "{id.invalid}")
-    @UniqueId
-    private String id;
+    @NotNull(message = "{id.invalid}")
+    private Integer id;
     private String location;
     @Pattern(regexp=".*[0-9].*", message = "{fee.invalid}")
     private String fee;

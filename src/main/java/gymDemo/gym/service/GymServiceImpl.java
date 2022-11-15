@@ -20,7 +20,7 @@ public class GymServiceImpl implements GymService {
     }
 
     @Override
-    public Optional<GymDto> getGymById(String id) {
+    public Optional<GymDto> getGymById(Integer id) {
         Optional<Gym> aGym = gymRepository.getGymById(id);
         if (aGym.isPresent()) {
             return Optional.of(GymAssembler.toDto(aGym.get()));

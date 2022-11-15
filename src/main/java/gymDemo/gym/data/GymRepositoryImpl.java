@@ -1,6 +1,8 @@
 package gymDemo.gym.data;
 
 import gymDemo.gym.domain.Gym;
+import gymDemo.gym.domain.Manager;
+import gymDemo.gym.domain.ManagerRole;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,16 +15,25 @@ import java.util.Optional;
 public class GymRepositoryImpl implements GymRepository{
     private final JdbcTemplate jdbcTemplate;
     private RowMapper<Gym> gymRowMapper;
+    private RowMapper<Manager> managerRowMapper;
 
     public GymRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         setGymRowMapper();
     }
 
+    private void setManagerRowMapper() {
+        managerRowMapper = (rm, index) -> new Manager(
+                rm.getInt("id"),
+                rm.getString("name"),
+                rm.getString("address"),
+                new ManagerRole(rm.getInt("role_id"), rm.getString("title"))
+        );
+    }
     private void setGymRowMapper() {
         gymRowMapper = (rm, index) -> new Gym(
                 rm.getString("name"),
-                rm.getString("id"),
+                rm.getInt("id"),
                 rm.getString("location"),
                 rm.getDouble("fee"),
                 (rm.getString("is_approved").equals("1")) ? Boolean.TRUE : Boolean.FALSE
@@ -36,7 +47,7 @@ public class GymRepositoryImpl implements GymRepository{
     }
 
     @Override
-    public Optional<Gym> getGymById(String id) {
+    public Optional<Gym> getGymById(Integer id) {
         String getGymByCodeSQL = "SELECT * FROM gym WHERE id = ?";
         try {
             return Optional.of(jdbcTemplate.queryForObject(getGymByCodeSQL, gymRowMapper, id));

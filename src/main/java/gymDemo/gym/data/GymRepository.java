@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface GymRepository {
     List<Gym> getGyms();
-    Optional<Gym> getGymById(String id);
+    Optional<Gym> getGymById(Integer id);
     void add(Gym newGym);
     List<Gym> getGymBySearch(String query);
 }

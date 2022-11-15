@@ -42,7 +42,7 @@ public class GymAdminController {
             bindingResult.getAllErrors().forEach(System.out::println);
             return new ModelAndView("admin/gym-form", model.asMap());
         } else {
-            GymDto gymDto = new GymDto(gymForm.getName(), gymForm.getId(), gymForm.getLocation(), Double.parseDouble(gymForm.getFee()), Boolean.FALSE);
+            GymDto gymDto = new GymDto(gymForm.getName(), gymForm.getId(), gymForm.getLocation(), Double.parseDouble(gymForm.getFee()), Boolean.FALSE, null);
             gymService.addNewGym(gymDto);
             var mv = new ModelAndView("redirect:/gym/gym-list");
             return mv;

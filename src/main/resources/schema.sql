@@ -5,16 +5,48 @@ SET IGNORECASE = TRUE;
 -- Table `gym`
 -- -----------------------------------------------------
 
-drop table if exists gym;
+DROP TABLE IF EXISTS gym;
+DROP TABLE IF EXISTS manager;
+-- DROP TABLE IF EXISTS manager_role;
+DROP TABLE IF EXISTS member;
 
-
-create table if not exists gym
+CREATE TABLE IF NOT EXISTS gym
 (
-    name            varchar(200) not null,
-    id              varchar(15)  not null,
-    location        varchar(30)  not null,
-    fee             varchar(30)  not null,
-    is_approved     varchar(1)   not null,
-    primary key (`id`)
-    )
+    name            VARCHAR(200)            NOT NULL,
+    id              INTEGER AUTO_INCREMENT  NOT NULL,
+    location        VARCHAR(30)             NOT NULL,
+    fee             VARCHAR(30)             NOT NULL,
+    is_approved     VARCHAR(1)              NOT NULL,
+    PRIMARY KEY (`id`)
+)
+    engine = InnoDB;
+
+CREATE TABLE IF NOT EXISTS manager
+(
+    id              INTEGER AUTO_INCREMENT    NOT NULL,
+    name            VARCHAR(200)              NOT NULL,
+    address         VARCHAR(200)              NOT NULL,
+    role_id         INTEGER                   NOT NULL,
+    gym_id          INTEGER                   NOT NULL,
+    PRIMARY KEY (`id`)
+)
+    engine = InnoDB;
+
+CREATE TABLE IF NOT EXISTS manager_role
+(
+    id               INTEGER AUTO_INCREMENT     NOT NULL,
+    title            VARCHAR(200)               NOT NULL,
+    PRIMARY KEY (`id`)
+)
+    engine = InnoDB;
+
+CREATE TABLE IF NOT EXISTS member
+(
+    id              INTEGER AUTO_INCREMENT     NOT NULL,
+    name            VARCHAR(200)               NOT NULL,
+    address         VARCHAR(200)               NOT NULL,
+    tier            VARCHAR(5)                 NOT NULL,
+    gym_id          INTEGER                    NOT NULL,
+    PRIMARY KEY (`id`)
+)
     engine = InnoDB;

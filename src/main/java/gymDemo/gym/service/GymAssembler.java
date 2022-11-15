@@ -16,7 +16,8 @@ public class GymAssembler {
                 gym.getId(),
                 gym.getLocation(),
                 gym.getFee(),
-                gym.getIsApproved()
+                gym.getIsApproved(),
+                gym.getManagers()
         );
     }
 }
