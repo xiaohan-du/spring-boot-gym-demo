@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gym List - our gyms</title>
+  <link th:replace="fragments/header :: bootstrap-css"></link>
+
+</head>
+<body>
+<div class="container">
+  <div th:replace="fragments/navbar"></div>
+  <table>
+    <thead>
+    <th class="table-header">Name</th>
+    <th class="table-header">Id</th>
+    <th class="table-header">Location</th>
+    <th class="table-header">Fee</th>
+    <th class="table-header">Approved?</th>
+    <th class="table-header">Action</th>
+    </thead>
+    <tbody>
+    <tr th:each="gym : ${gyms}">
+      <td th:text="${gym.name}">Gym name</td>
+      <td th:text="${gym.id}">Gym id</td>
+      <td th:text="${gym.location}">Gym location</td>
+      <td th:text="${gym.fee}">Gym fee</td>
+      <td th:text="${gym.isApproved}">Is approved?</td>
+      <td>
+        <a th:href="@{/admin/gym/update/{id} (id=${gym.id})}">Update</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div th:replace="fragments/footer :: footer-links"></div>
+</div>
+<div th:replace="fragments/footer :: bootstrap-js"></div>
+</body>
+</html>

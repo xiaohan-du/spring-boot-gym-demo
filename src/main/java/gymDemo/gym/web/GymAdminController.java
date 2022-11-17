@@ -43,6 +43,11 @@ public class GymAdminController {
         var mv = new ModelAndView("admin/gym-form", model.asMap());
         return mv;
     }
+    @GetMapping("update")
+    public ModelAndView getUpdateGymView(Model model) {
+        var mv = new ModelAndView("admin/update-gym-form", model.asMap());
+        return mv;
+    }
 
     @GetMapping("update/{id}")
     public ModelAndView updateGymForm(@PathVariable("id") Optional<Integer> id, Model model) {
