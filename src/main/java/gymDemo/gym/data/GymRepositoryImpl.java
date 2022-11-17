@@ -3,6 +3,7 @@ package gymDemo.gym.data;
 import gymDemo.gym.domain.Gym;
 import gymDemo.gym.domain.Manager;
 import gymDemo.gym.domain.ManagerRole;
+import gymDemo.gym.domain.Member;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,9 +18,12 @@ public class GymRepositoryImpl implements GymRepository{
     private RowMapper<Gym> gymRowMapper;
     private RowMapper<Manager> managerRowMapper;
 
+    private RowMapper<Member> memberRowMapper;
+
     public GymRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         setGymRowMapper();
+        setMemberRowMapper();
     }
 
     private void setManagerRowMapper() {
@@ -67,5 +71,21 @@ public class GymRepositoryImpl implements GymRepository{
         String searchQuery = "%" + query + "%";
         String searchSQL = "SELECT * FROM gym WHERE name LIKE ?";
         return jdbcTemplate.query(searchSQL, gymRowMapper, searchQuery);
+    }
+
+    private void setMemberRowMapper() {
+        memberRowMapper = (rm, index) -> new Member(
+                rm.getInt("id"),
+                rm.getString("name"),
+                rm.getString("address"),
+                rm.getInt("tier"),
+                rm.getInt("gym_id")
+        );
+    }
+
+    @Override
+    public List<Member> getMembers() {
+        String getMemberSQL = "SELECT * FROM member";
+        return jdbcTemplate.query(getMemberSQL, memberRowMapper);
     }
 }

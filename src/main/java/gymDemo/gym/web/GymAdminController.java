@@ -2,6 +2,7 @@ package gymDemo.gym.web;
 
 import gymDemo.gym.service.GymDto;
 import gymDemo.gym.service.GymService;
+import gymDemo.gym.service.MemberDto;
 import gymDemo.gym.web.forms.GymForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,14 @@ public class GymAdminController {
     public void getGyms(Model model) {
         List<GymDto> gyms = gymService.getGyms();
         model.addAttribute("gyms", gyms);
+    }
+
+    @GetMapping("member-list")
+    public ModelAndView getMembers(Model model) {
+        List<MemberDto> members = gymService.getMembers();
+        model.addAttribute("members", members);
+        var mv = new ModelAndView("admin/member-list", model.asMap());
+        return mv;
     }
 
     @GetMapping("add")

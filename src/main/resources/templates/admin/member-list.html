@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Member List</title>
+  <link th:replace="fragments/header :: bootstrap-css"></link>
+
+</head>
+<body>
+<div class="container">
+  <div th:replace="fragments/navbar"></div>
+  <table>
+    <thead>
+    <th class="table-header">Name</th>
+    <th class="table-header">Id</th>
+    <th class="table-header">Address</th>
+    <th class="table-header">Tier</th>
+    </thead>
+    <tbody>
+    <tr th:each="member : ${members}">
+      <td th:text="${member.name}">Name</td>
+      <td th:text="${member.id}">ID</td>
+      <td th:text="${member.address}">Address</td>
+      <td th:text="${member.tier}">Tier</td>
+    </tr>
+    </tbody>
+  </table>
+  <div th:replace="fragments/footer :: footer-links"></div>
+</div>
+<div th:replace="fragments/footer :: bootstrap-js"></div>
+</body>
+</html>

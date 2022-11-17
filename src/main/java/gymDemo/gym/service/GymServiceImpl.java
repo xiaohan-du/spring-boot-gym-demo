@@ -2,6 +2,7 @@ package gymDemo.gym.service;
 
 import gymDemo.gym.data.GymRepository;
 import gymDemo.gym.domain.Gym;
+import gymDemo.gym.domain.Member;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,12 @@ public class GymServiceImpl implements GymService {
     public List<GymDto> getGyms() {
         List<Gym> gyms = gymRepository.getGyms();
         return GymAssembler.toDto(gyms);
+    }
+
+    @Override
+    public List<MemberDto> getMembers() {
+        List<Member> members = gymRepository.getMembers();
+        return GymAssembler.toMemberDto(members);
     }
 
     @Override

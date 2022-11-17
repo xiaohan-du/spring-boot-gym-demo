@@ -20,17 +20,27 @@
             <a class="nav-link" href="/gym/gym-list">Gym List</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" id="gymListDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Choose a Gym
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu" aria-labelledby="gymListDropdown">
               <li th:each="gym : ${gyms}">
                 <a class="dropdown-item" th:text="${gym.name}" th:href="@{/gym/profile/{id} (id=${gym.id})}">Gym name</a>
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/gym/add">Add a Gym</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Admin
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+              <li>
+                <a class="nav-link" href="/admin/gym/add">Add a Gym</a>
+              </li>
+              <li>
+                <a class="nav-link" href="/admin/gym/member-list">Members</a>
+              </li>
+            </ul>
           </li>
         </ul>
 

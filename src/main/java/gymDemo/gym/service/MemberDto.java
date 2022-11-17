@@ -1,11 +1,11 @@
-package gymDemo.gym.domain;
+package gymDemo.gym.service;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 @AllArgsConstructor
-public class Member {
+public class MemberDto {
     private Integer id;
     private String name;
     private String address;
