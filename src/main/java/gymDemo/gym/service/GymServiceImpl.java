@@ -37,6 +37,16 @@ public class GymServiceImpl implements GymService {
     }
 
     @Override
+    public Optional<GymAndManagerDto> getGymByIdWithManagers(Integer id) {
+        Optional<Gym> aGym = gymRepository.getGymById(id);
+        if (aGym.isPresent()) {
+            return Optional.of(GymAssembler.toDtoWithManagers(aGym.get()));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public void addNewGym(GymDto gymDto) {
         Gym newGym = new Gym(
                 gymDto.getName(),

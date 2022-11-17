@@ -24,6 +24,7 @@ public class GymRepositoryImpl implements GymRepository{
         this.jdbcTemplate = jdbcTemplate;
         setGymRowMapper();
         setMemberRowMapper();
+        setManagerRowMapper();
     }
 
     private void setManagerRowMapper() {
@@ -31,7 +32,7 @@ public class GymRepositoryImpl implements GymRepository{
                 rm.getInt("id"),
                 rm.getString("name"),
                 rm.getString("address"),
-                new ManagerRole(rm.getInt("role_id"), rm.getString("title"))
+                new ManagerRole(rm.getInt("id"), rm.getString("title"))
         );
     }
     private void setGymRowMapper() {
@@ -44,6 +45,16 @@ public class GymRepositoryImpl implements GymRepository{
         );
     }
 
+    private void setMemberRowMapper() {
+        memberRowMapper = (rm, index) -> new Member(
+                rm.getInt("id"),
+                rm.getString("name"),
+                rm.getString("address"),
+                rm.getInt("tier"),
+                rm.getInt("gym_id")
+        );
+    }
+
     @Override
     public List<Gym> getGyms() {
         String getGymsSQL = "SELECT * FROM gym";
@@ -52,9 +63,13 @@ public class GymRepositoryImpl implements GymRepository{
 
     @Override
     public Optional<Gym> getGymById(Integer id) {
-        String getGymByCodeSQL = "SELECT * FROM gym WHERE id = ?";
+        String getGymByIdSQL = "SELECT * FROM gym WHERE id = ?";
+        Optional<Gym> theGym;
+
         try {
-            return Optional.of(jdbcTemplate.queryForObject(getGymByCodeSQL, gymRowMapper, id));
+            theGym = Optional.of(jdbcTemplate.queryForObject(getGymByIdSQL, gymRowMapper, id));
+            addManagerToGym(theGym);
+            return theGym;
         } catch (IncorrectResultSizeDataAccessException e) {
             return Optional.empty();
         }
@@ -73,19 +88,15 @@ public class GymRepositoryImpl implements GymRepository{
         return jdbcTemplate.query(searchSQL, gymRowMapper, searchQuery);
     }
 
-    private void setMemberRowMapper() {
-        memberRowMapper = (rm, index) -> new Member(
-                rm.getInt("id"),
-                rm.getString("name"),
-                rm.getString("address"),
-                rm.getInt("tier"),
-                rm.getInt("gym_id")
-        );
-    }
-
     @Override
     public List<Member> getMembers() {
         String getMemberSQL = "SELECT * FROM member";
         return jdbcTemplate.query(getMemberSQL, memberRowMapper);
+    }
+
+    private void addManagerToGym(Optional<Gym> theGym) {
+        String managerForGymSQL = "SELECT m.id, m.name, m.address, r.title FROM manager m JOIN manager_role r ON m.role_id = r.id WHERE m.gym_id = ?";
+        List<Manager> managers = jdbcTemplate.query(managerForGymSQL, managerRowMapper, theGym.get().getId());
+        theGym.get().setManagers(managers);
     }
 }

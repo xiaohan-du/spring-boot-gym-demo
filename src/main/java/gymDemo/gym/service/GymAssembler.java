@@ -1,6 +1,7 @@
 package gymDemo.gym.service;
 
 import gymDemo.gym.domain.Gym;
+import gymDemo.gym.domain.Manager;
 import gymDemo.gym.domain.Member;
 
 import java.util.List;
@@ -21,6 +22,15 @@ public class GymAssembler {
                 gym.getIsApproved(),
                 gym.getManagers()
         );
+    }
+
+    public static GymAndManagerDto toDtoWithManagers(Gym gym) {
+        List<ManagerDto> managers = gym.getManagers()
+                .stream()
+                .map(m -> new ManagerDto(m.getId(), m.getName(), m.getAddress(), m.getRole().getId()))
+                .collect(Collectors.toList());
+        GymAndManagerDto dto = new GymAndManagerDto(gym.getName(), gym.getId(), gym.getLocation(), gym.getFee(), gym.getIsApproved(), managers);
+        return dto;
     }
 
     public static MemberDto toDto(Member member) {

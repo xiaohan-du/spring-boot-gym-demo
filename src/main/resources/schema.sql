@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS gym
     name            VARCHAR(200)            NOT NULL,
     id              INTEGER AUTO_INCREMENT  NOT NULL,
     location        VARCHAR(30)             NOT NULL,
-    fee             VARCHAR(30)             NOT NULL,
+    fee             FLOAT(30)             NOT NULL,
     is_approved     VARCHAR(1)              NOT NULL,
     PRIMARY KEY (`id`)
 )
@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS manager
 
 CREATE TABLE IF NOT EXISTS manager_role
 (
-    id               INTEGER AUTO_INCREMENT     NOT NULL,
-    title            VARCHAR(200)               NOT NULL,
+    id               INTEGER        NOT NULL,
+    title            VARCHAR(200)   NOT NULL,
     PRIMARY KEY (`id`)
 )
     engine = InnoDB;

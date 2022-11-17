@@ -1,5 +1,6 @@
 package gymDemo.gym.web;
 
+import gymDemo.gym.service.GymAndManagerDto;
 import gymDemo.gym.service.GymDto;
 import gymDemo.gym.service.GymService;
 import gymDemo.gym.service.MemberDto;
@@ -7,14 +8,12 @@ import gymDemo.gym.web.forms.GymForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("admin/gym")
@@ -45,13 +44,28 @@ public class GymAdminController {
         return mv;
     }
 
+    @GetMapping("update/{id}")
+    public ModelAndView updateGymForm(@PathVariable("id") Optional<Integer> id, Model model) {
+        Optional<GymAndManagerDto> gymAndManagerDtoOptional = gymService.getGymByIdWithManagers(id.get());
+        var gymAndManagerDto = gymAndManagerDtoOptional.get();
+        GymForm updateForm = new GymForm(
+                gymAndManagerDto.getName(),
+                gymAndManagerDto.getId(),
+                gymAndManagerDto.getLocation(),
+                gymAndManagerDto.getFee(),
+                gymAndManagerDto.getIsApproved());
+        model.addAttribute("gymForm", updateForm);
+        var mv = new ModelAndView("admin/gym-form", model.asMap());
+        return mv;
+    }
+
     @PostMapping("add")
     public ModelAndView postNewGymForm(@Valid GymForm gymForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(System.out::println);
             return new ModelAndView("admin/gym-form", model.asMap());
         } else {
-            GymDto gymDto = new GymDto(gymForm.getName(), gymForm.getId(), gymForm.getLocation(), Double.parseDouble(gymForm.getFee()), Boolean.FALSE, null);
+            GymDto gymDto = new GymDto(gymForm.getName(), gymForm.getId(), gymForm.getLocation(), gymForm.getFee(), Boolean.FALSE, null);
             gymService.addNewGym(gymDto);
             var mv = new ModelAndView("redirect:/gym/gym-list");
             return mv;
